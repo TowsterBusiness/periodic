@@ -43,4 +43,30 @@ function App() {
   );
 }
 
+function getElementBySymbol(s: string): ElementJson | null {
+  var elementFin = null;
+  elementFile["elements"].forEach((element: ElementJson) => {
+    if (s == element.symbol) {
+      elementFin = element;
+    }
+  });
+  return elementFin;
+}
+
+function atomicMassFromString(s: string): number {
+  var pointer1: number = 0;
+
+  var numberBuilder = 0;
+
+  while (pointer1 < s.length) {
+    if (RegExp("[A-Z]").test(s.charAt(pointer1))) {
+      let stringBuilder = s.charAt(pointer1);
+      pointer1++;
+      while (RegExp("[a-z]").test(s.charAt(pointer1))) {
+        // Error here for 1 lettered items
+        stringBuilder += s.charAt(pointer1);
+        pointer1++;
+      }
+    }
+
 export default App;
