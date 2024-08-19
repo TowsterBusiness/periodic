@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { FormEventHandler, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
+import elementFile from "./assets/periodic_elements.json";
+
+type ElementJson = (typeof elementFile.elements)[0];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [output, setOutput] = useState("Waiting...");
+
+  var textbox: HTMLInputElement = document.getElementById(
+    "text-box"
+  ) as HTMLInputElement;
+
+  var onInputHandler = (evt: any) => {
+    var editedText: string = evt.target.value;
+
+    if (editedText == "") {
+      setOutput("Waiting...");
+    }
+
+    // Chemical Number Check
+    elementFile["elements"].forEach((element: ElementJson) => {
+      if (editedText == element.number.toString()) {
+        setOutput(element.name);
+      }
+    });
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <h1>⚛️ Periodic ⚛️</h1>
+      <p>Finds the atomic weights of atoms and molecules</p>
+      <p>Ex. "(NH.4).3PO.4" would be (NH₄)₃PO₄</p>
+      <form id="main-input" className="noselect">
+        <input
+          type="text"
+          id="text-box"
+          autoComplete="off"
+          onInput={onInputHandler}
+        />
+      </form>
+  );
 }
 
-export default App
+export default App;
