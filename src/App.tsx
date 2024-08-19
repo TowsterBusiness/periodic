@@ -69,4 +69,19 @@ function atomicMassFromString(s: string): number {
       }
     }
 
+    var coefficientBuilder = 1;
+      if (s.charAt(pointer1) == ".") {
+        coefficientBuilder = 0;
+        pointer1++;
+        while (
+          pointer1 < s.length &&
+          new RegExp("[0-9]").test(s.charAt(pointer1))
+        ) {
+          coefficientBuilder *= 10;
+          coefficientBuilder += parseInt(s.charAt(pointer1));
+          pointer1++;
+        }
+      }
+
+
 export default App;
