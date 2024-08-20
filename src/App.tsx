@@ -7,6 +7,7 @@ type ElementJson = (typeof elementFile.elements)[0];
 
 function App() {
   const [output, setOutput] = useState("Waiting...");
+  const [elementList, setElementList] = useState([elementFile.elements[0]]);
 
   var textbox: HTMLInputElement = document.getElementById(
     "text-box"
@@ -25,8 +26,17 @@ function App() {
         setOutput(element.name);
       }
     });
-  };
 
+    var chemicalList: Array<string> = editedText
+      .replaceAll(new RegExp("\\(|\\)|[0-9]|\\.", "g"), "")
+      .split(new RegExp("(?=[A-Z])"));
+    console.log(chemicalList);
+
+    var elementList: Array<ElementJson> = [];
+    var moleculeWeight: number = atomicMassFromString(editedText);
+
+    setElementList(elementList);
+    setOutput(moleculeWeight.toPrecision(4).toString());
   return (
     <div className="App">
       <h1>⚛️ Periodic ⚛️</h1>
@@ -40,6 +50,15 @@ function App() {
           onInput={onInputHandler}
         />
       </form>
+      <div id="container"></div>
+      <h1 id="test">{output}</h1>
+      <h6>
+        All elements derived from{" "}
+        <a href="https://github.com/Bowserinator/Periodic-Table-JSON/blob/master/PeriodicTableJSON.json">
+          here
+        </a>
+      </h6>
+    </div>
   );
 }
 
