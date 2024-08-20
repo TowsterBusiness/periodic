@@ -103,9 +103,39 @@ function atomicMassFromString(s: string): number {
         }
         pointer1++;
       }
+
+      var coefficientBuilder = 1;
+      if (s.charAt(pointer1) == ".") {
+        coefficientBuilder = 0;
+        pointer1++;
+        while (
+          pointer1 < s.length &&
+          new RegExp("[0-9]").test(s.charAt(pointer1))
+        ) {
+          coefficientBuilder *= 10;
+          coefficientBuilder += parseInt(s.charAt(pointer1));
+          pointer1++;
+        }
+        console.log(coefficientBuilder);
+      }
+
+      if (passStr == null) {
+        console.error(
+          "Hey!, ",
+          pointer1,
+          "index, ",
+          s.charAt(pointer1),
+          "doesn't have an element"
+        );
+      } else {
+        numberBuilder += atomicMassFromString(passStr) * coefficientBuilder;
+      }
+    } else {
+      pointer1++;
     }
   }
 
-
+  return numberBuilder;
+}
 
 export default App;
