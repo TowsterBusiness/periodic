@@ -13,7 +13,6 @@ function App() {
       let element = elementFile.elements[elementNumber];
 
       let props: PeriodicElementProps = {
-        id: y * x,
         element: element,
         highlight: false,
       };
@@ -24,9 +23,15 @@ function App() {
         props.element = null;
       }
 
-      row.push(PeriodicElement(props));
+      row.push(
+        <PeriodicElement key={crypto.randomUUID()} {...props}></PeriodicElement>
+      );
     }
-    grid.push(<div className="grid-column">{row}</div>);
+    grid.push(
+      <div key={y} className="grid-column">
+        {row}
+      </div>
+    );
   }
   return <div id="grid-container">{grid}</div>;
 }
