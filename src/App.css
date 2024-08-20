@@ -1,0 +1,23 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+#main-input {
+  margin: 10px;
+}
+#text-box {
+  border-radius: 20px;
+  border-width: 1;
+  border-color: plum;
+  height: 20px;
+  width: 50%;
+  outline: none;
+  padding-left: 10px;
+}
+
+#text-box:focus {
+  outline-width: 0;
+}
