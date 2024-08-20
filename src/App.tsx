@@ -1,9 +1,12 @@
 import { FormEventHandler, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
+import PeriodicTable from "./PeriodicTable";
 import elementFile from "./assets/periodic_elements.json";
+import ElementCard from "./ElementCard";
+// import { ElementJson } from "./ElementDataTypes";
 
-type ElementJson = (typeof elementFile.elements)[0];
+export type ElementJson = (typeof elementFile.elements)[0];
 
 function App() {
   const [output, setOutput] = useState("Waiting...");
@@ -35,8 +38,17 @@ function App() {
     var elementList: Array<ElementJson> = [];
     var moleculeWeight: number = atomicMassFromString(editedText);
 
+    chemicalList.forEach((chemical) => {
+      var element: ElementJson | null = getElementBySymbol(chemical);
+      if (element != null) {
+        elementList.push(element);
+      }
+    });
+
     setElementList(elementList);
     setOutput(moleculeWeight.toPrecision(4).toString());
+  };
+
   return (
     <div className="App">
       <h1>⚛️ Periodic ⚛️</h1>
@@ -52,6 +64,11 @@ function App() {
       </form>
       <div id="container"></div>
       <h1 id="test">{output}</h1>
+      <div>
+        {elementList.map((element, index) => {
+          return <ElementCard key={index} element={element}></ElementCard>;
+        })}
+      </div>
       <h6>
         All elements derived from{" "}
         <a href="https://github.com/Bowserinator/Periodic-Table-JSON/blob/master/PeriodicTableJSON.json">
