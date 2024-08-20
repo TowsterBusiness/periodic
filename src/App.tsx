@@ -67,9 +67,8 @@ function atomicMassFromString(s: string): number {
         stringBuilder += s.charAt(pointer1);
         pointer1++;
       }
-    }
 
-    var coefficientBuilder = 1;
+      var coefficientBuilder = 1;
       if (s.charAt(pointer1) == ".") {
         coefficientBuilder = 0;
         pointer1++;
@@ -82,6 +81,31 @@ function atomicMassFromString(s: string): number {
           pointer1++;
         }
       }
+
+      let element = getElementBySymbol(stringBuilder);
+      if (element != null) {
+        numberBuilder += element.atomic_mass * coefficientBuilder;
+      }
+    } else if (s.charAt(pointer1) == "(") {
+      var startPointer = pointer1;
+      var passStr: string | null = null;
+      var counter: number = 0;
+      while (pointer1 < s.length) {
+        if (s.charAt(pointer1) == "(") {
+          counter++;
+        } else if (s.charAt(pointer1) == ")") {
+          counter--;
+          if (counter <= 0) {
+            passStr = s.substring(startPointer + 1, pointer1);
+            pointer1++;
+            break;
+          }
+        }
+        pointer1++;
+      }
+    }
+  }
+
 
 
 export default App;
