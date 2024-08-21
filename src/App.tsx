@@ -1,16 +1,15 @@
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import PeriodicTable from "./PeriodicTable";
 import elementFile from "./assets/periodic_elements.json";
 import ElementCard from "./ElementCard";
-// import { ElementJson } from "./ElementDataTypes";
-
-export type ElementJson = (typeof elementFile.elements)[0];
+import { ElementJson } from "./ElementDataTypes";
 
 function App() {
   const [output, setOutput] = useState("Waiting...");
   const [elementList, setElementList] = useState([elementFile.elements[0]]);
+  let refPeriodicTable = useRef();
 
   var textbox: HTMLInputElement = document.getElementById(
     "text-box"
@@ -42,6 +41,8 @@ function App() {
       var element: ElementJson | null = getElementBySymbol(chemical);
       if (element != null) {
         elementList.push(element);
+        if (refPeriodicTable.current)
+          refPeriodicTable.current.triggerHighlight(element.number, true);
       }
     });
 
@@ -69,6 +70,7 @@ function App() {
           return <ElementCard key={index} element={element}></ElementCard>;
         })}
       </div>
+      <PeriodicTable ref={refPeriodicTable}></PeriodicTable>
       <h6>
         All elements derived from{" "}
         <a href="https://github.com/Bowserinator/Periodic-Table-JSON/blob/master/PeriodicTableJSON.json">

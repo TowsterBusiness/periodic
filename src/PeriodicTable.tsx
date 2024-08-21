@@ -1,13 +1,22 @@
+import React, { forwardRef, useRef, useImperativeHandle } from "react";
 import "./PeriodicTable.css";
 import PeriodicElement from "./PeriodicElement";
 import elementFile from "./assets/periodic_elements.json";
 import { ElementJson } from "./ElementDataTypes";
 import { PeriodicElementProps } from "./PeriodicElement";
 
-function App() {
+const PeriodicTable = forwardRef((props, ref) => {
   let grid = [];
   let elementNumber = 0;
-  let elementHash = new Map();
+  let elementHash: Map<number, any> = new Map();
+
+  useImperativeHandle(ref, () => {
+    triggerHighlight: (atmNum: number, isHighlight: boolean) => {
+      elementHash.get(atmNum).current.triggerHighlight(isHighlight);
+      console.log(atmNum, isHighlight);
+    };
+  });
+
   for (let y = 0; y < 11; y++) {
     let row = [];
     for (let x = 0; x < 18; x++) {
@@ -36,12 +45,19 @@ function App() {
         props.element = null;
       }
 
+      let childRef = useRef(null);
       let elementHtml = (
-        <PeriodicElement key={crypto.randomUUID()} {...props}></PeriodicElement>
+        <PeriodicElement
+          key={crypto.randomUUID()}
+          ref={childRef}
+          {...props}
+        ></PeriodicElement>
       );
 
       if (isSave) {
-        elementHash.set(props.element?.symbol, elementHtml);
+        if (props.element) {
+          elementHash.set(props.element.number, childRef);
+        }
       }
 
       row.push(elementHtml);
@@ -53,6 +69,6 @@ function App() {
     );
   }
   return <div id="grid-container">{grid}</div>;
-}
+});
 
-export default App;
+export default PeriodicTable;
