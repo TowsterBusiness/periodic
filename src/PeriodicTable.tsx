@@ -1,4 +1,9 @@
-import React, { forwardRef, useRef, useImperativeHandle } from "react";
+import React, {
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+  MutableRefObject,
+} from "react";
 import "./PeriodicTable.css";
 import PeriodicElement from "./PeriodicElement";
 import elementFile from "./assets/periodic_elements.json";
@@ -11,9 +16,10 @@ const PeriodicTable = forwardRef((props, ref) => {
   let elementHash: Map<number, any> = new Map();
 
   useImperativeHandle(ref, () => {
-    triggerHighlight: (atmNum: number, isHighlight: boolean) => {
-      elementHash.get(atmNum).current.triggerHighlight(isHighlight);
-      console.log(atmNum, isHighlight);
+    return {
+      triggerHighlight(atmNum: number, isHighlight: boolean) {
+        elementHash.get(atmNum).current.triggerHighlight(isHighlight);
+      },
     };
   });
 

@@ -9,17 +9,22 @@ export interface PeriodicElementProps {
 }
 
 const PeriodicElement = forwardRef((props: PeriodicElementProps, ref) => {
-  const [backgroundColor, setBackgroundColor] = useState("#00000000");
+  const [textColor, setTextColor] = useState("#ffffff");
+  const [fontWeight, setFontWeight] = useState(500);
 
-  useImperativeHandle(ref, () => ({
-    triggerHighlight: (isHighlight: boolean) => {
-      if (isHighlight) {
-        setBackgroundColor("#f0f55d0ff");
-      } else {
-        setBackgroundColor("#00000000");
-      }
-    },
-  }));
+  useImperativeHandle(ref, () => {
+    return {
+      triggerHighlight(isHighlight: boolean) {
+        if (isHighlight) {
+          setTextColor("#f0f55d0");
+          setFontWeight(800);
+        } else {
+          setTextColor("#fffff");
+          setFontWeight(500);
+        }
+      },
+    };
+  });
 
   if (props.element == null) {
     return <span className="space-periodic"></span>;
@@ -27,7 +32,7 @@ const PeriodicElement = forwardRef((props: PeriodicElementProps, ref) => {
     return (
       <span
         className="element-periodic"
-        style={{ backgroundColor: backgroundColor }}
+        style={{ color: textColor, fontWeight: fontWeight }}
       >
         {props.element.symbol}
       </span>
