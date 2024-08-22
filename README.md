@@ -1,3 +1,7 @@
+# Periodic
+
+This project creates a periodic table that you can type in so you can ge the answers you want!
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
