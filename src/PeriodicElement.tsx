@@ -15,16 +15,25 @@ const PeriodicElement = forwardRef((props: PeriodicElementProps, ref) => {
   useImperativeHandle(ref, () => {
     return {
       triggerHighlight(isHighlight: boolean) {
-        if (isHighlight) {
-          setTextColor("#f0f55d0");
-          setFontWeight(800);
-        } else {
-          setTextColor("#fffff");
-          setFontWeight(500);
-        }
+        handleHighlight(isHighlight);
       },
     };
   });
+
+  function handleHighlight(isHighlight: boolean) {
+    if (isHighlight) {
+      highLightTrue();
+    } else {
+      setTextColor("#fffff");
+      setFontWeight(500);
+    }
+  }
+
+  function highLightTrue() {
+    console.log(123);
+    setTextColor("#f0f55d");
+    setFontWeight(800);
+  }
 
   if (props.element == null) {
     return <span className="space-periodic"></span>;
@@ -33,6 +42,7 @@ const PeriodicElement = forwardRef((props: PeriodicElementProps, ref) => {
       <span
         className="element-periodic"
         style={{ color: textColor, fontWeight: fontWeight }}
+        onClick={highLightTrue}
       >
         {props.element.symbol}
       </span>

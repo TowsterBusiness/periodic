@@ -9,7 +9,7 @@ import { ElementJson } from "./ElementDataTypes";
 function App() {
   const [output, setOutput] = useState("Waiting...");
   const [elementList, setElementList] = useState([elementFile.elements[0]]);
-  let refPeriodicTable = useRef();
+  const refPeriodicTable = useRef(null);
 
   var textbox: HTMLInputElement = document.getElementById(
     "text-box"
@@ -40,9 +40,9 @@ function App() {
     chemicalList.forEach((chemical) => {
       var element: ElementJson | null = getElementBySymbol(chemical);
       if (element != null) {
-        elementList.push(element);
-        if (refPeriodicTable.current)
+        if (refPeriodicTable.current) {
           refPeriodicTable.current.triggerHighlight(element.number, true);
+        }
       }
     });
 
