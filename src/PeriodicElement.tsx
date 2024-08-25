@@ -5,35 +5,14 @@ import "./PeriodicElement.css";
 
 export interface PeriodicElementProps {
   element: ElementJson | null;
-  highlight: boolean;
+  isHighlight: boolean;
 }
 
-const PeriodicElement = forwardRef((props: PeriodicElementProps, ref) => {
-  const [textColor, setTextColor] = useState("#ffffff");
-  const [fontWeight, setFontWeight] = useState(500);
-
-  useImperativeHandle(ref, () => {
-    return {
-      triggerHighlight(isHighlight: boolean) {
-        handleHighlight(isHighlight);
-      },
-    };
+function PeriodicElement(props: PeriodicElementProps) {
+  const [textColor, setTextColor] = useState({
+    color: "white",
+    fontWeight: 500,
   });
-
-  function handleHighlight(isHighlight: boolean) {
-    if (isHighlight) {
-      highLightTrue();
-    } else {
-      setTextColor("#fffff");
-      setFontWeight(500);
-    }
-  }
-
-  function highLightTrue() {
-    console.log(123);
-    setTextColor("#f0f55d");
-    setFontWeight(800);
-  }
 
   if (props.element == null) {
     return <span className="space-periodic"></span>;
@@ -41,13 +20,16 @@ const PeriodicElement = forwardRef((props: PeriodicElementProps, ref) => {
     return (
       <span
         className="element-periodic"
-        style={{ color: textColor, fontWeight: fontWeight }}
-        onClick={highLightTrue}
+        style={
+          props.isHighlight
+            ? { background: "#703194", fontWeight: 800 }
+            : { color: "white", fontWeight: 500 }
+        }
       >
         {props.element.symbol}
       </span>
     );
   }
-});
+}
 
 export default PeriodicElement;

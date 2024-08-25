@@ -3,6 +3,7 @@ import React, {
   useRef,
   useImperativeHandle,
   MutableRefObject,
+  useState,
 } from "react";
 import "./PeriodicTable.css";
 import PeriodicElement from "./PeriodicElement";
@@ -13,12 +14,12 @@ import { PeriodicElementProps } from "./PeriodicElement";
 const PeriodicTable = forwardRef((props, ref) => {
   let grid = [];
   let elementNumber = 0;
-  let elementHash: Map<number, any> = new Map();
+  let [highlightHash, setHighlightHash] = useState(new Map());
 
   useImperativeHandle(ref, () => {
     return {
       triggerHighlight(atmNum: number, isHighlight: boolean) {
-        elementHash.get(atmNum).current.triggerHighlight(isHighlight);
+        highlightHash.set(atmNum, isHighlight);
       },
     };
   });
@@ -28,9 +29,13 @@ const PeriodicTable = forwardRef((props, ref) => {
     for (let x = 0; x < 18; x++) {
       let element = elementFile.elements[elementNumber];
 
+      if (!highlightHash.has(element.number)) {
+        highlightHash.set(element.number, false);
+      }
+
       let props: PeriodicElementProps = {
         element: element,
-        highlight: false,
+        isHighlight: highlightHash.get(element.number),
       };
 
       let isSave = false;
@@ -53,18 +58,14 @@ const PeriodicTable = forwardRef((props, ref) => {
 
       let childRef = useRef(null);
       let elementHtml = (
-        <PeriodicElement
-          key={crypto.randomUUID()}
-          ref={childRef}
-          {...props}
-        ></PeriodicElement>
+        <PeriodicElement key={crypto.randomUUID()} {...props}></PeriodicElement>
       );
 
-      if (isSave) {
-        if (props.element) {
-          elementHash.set(props.element.number, childRef);
-        }
-      }
+      // if (isSave) {
+      //   if (props.element) {
+      //     elementHash.set(props.element.number, childRef);
+      //   }
+      // }
 
       row.push(elementHtml);
     }
