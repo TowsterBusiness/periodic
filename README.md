@@ -2,6 +2,14 @@
 
 This project creates a periodic table that you can type in so you can ge the answers you want!
 
+# How to use the program
+
+Theres only 2 steps to runthe program,
+1. Install [Node](https://nodejs.org/en)
+2. Then type `npm run dev` in the downloaded folder!
+
+easy as that!!
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
