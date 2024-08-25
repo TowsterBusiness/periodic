@@ -61,12 +61,6 @@ const PeriodicTable = forwardRef((props, ref) => {
         <PeriodicElement key={crypto.randomUUID()} {...props}></PeriodicElement>
       );
 
-      // if (isSave) {
-      //   if (props.element) {
-      //     elementHash.set(props.element.number, childRef);
-      //   }
-      // }
-
       row.push(elementHtml);
     }
     grid.push(
