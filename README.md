@@ -4,6 +4,8 @@ This project creates a periodic table that you can type in so you can ge the ans
 
 The instructions are in the top of the page
 
+[ss](ss.png)
+
 # How to use the program
 
 Theres only 5 steps to runthe program,
