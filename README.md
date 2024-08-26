@@ -4,9 +4,12 @@ This project creates a periodic table that you can type in so you can ge the ans
 
 # How to use the program
 
-Theres only 2 steps to runthe program,
+Theres only 5 steps to runthe program,
 1. Install [Node](https://nodejs.org/en)
-2. Then type `npm run dev` in the downloaded folder!
+2. Download this repository by using git or just downloading the zip
+3. There should be a new folder so open the terminal or comand prompht on that folder
+4. Them type `npm install`
+5. Then type `npm run dev`
 
 easy as that!!
 
