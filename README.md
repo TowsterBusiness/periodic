@@ -2,6 +2,8 @@
 
 This project creates a periodic table that you can type in so you can ge the answers you want!
 
+The instructions are in the top of the page
+
 # How to use the program
 
 Theres only 5 steps to runthe program,
