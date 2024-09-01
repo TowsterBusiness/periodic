@@ -1,4 +1,3 @@
-import { FormEventHandler, useState } from "react";
 import "./ElementCard.css";
 import { ElementJson } from "./ElementDataTypes";
 

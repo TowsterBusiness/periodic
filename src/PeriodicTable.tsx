@@ -1,20 +1,13 @@
-import React, {
-  forwardRef,
-  useRef,
-  useImperativeHandle,
-  MutableRefObject,
-  useState,
-} from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import "./PeriodicTable.css";
 import PeriodicElement from "./PeriodicElement";
 import elementFile from "./assets/periodic_elements.json";
-import { ElementJson } from "./ElementDataTypes";
 import { PeriodicElementProps } from "./PeriodicElement";
 
-const PeriodicTable = forwardRef((props, ref) => {
+const PeriodicTable = forwardRef((ref) => {
   let grid = [];
   let elementNumber = 0;
-  let [highlightHash, setHighlightHash] = useState(new Map());
+  let [highlightHash] = useState(new Map());
 
   useImperativeHandle(ref, () => {
     return {
@@ -38,7 +31,6 @@ const PeriodicTable = forwardRef((props, ref) => {
         isHighlight: highlightHash.get(element.number),
       };
 
-      let isSave = false;
       if (element.xpos - 1 == x && element.ypos - 1 == y) {
         if (elementNumber == 55) {
           elementNumber = 71;
@@ -51,12 +43,10 @@ const PeriodicTable = forwardRef((props, ref) => {
         } else {
           elementNumber++;
         }
-        isSave = true;
       } else {
         props.element = null;
       }
 
-      let childRef = useRef(null);
       let elementHtml = (
         <PeriodicElement key={crypto.randomUUID()} {...props}></PeriodicElement>
       );

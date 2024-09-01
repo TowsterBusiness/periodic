@@ -1,5 +1,3 @@
-import React, { useImperativeHandle, forwardRef, useState } from "react";
-import elementFile from "./assets/periodic_elements.json";
 import { ElementJson } from "./ElementDataTypes";
 import "./PeriodicElement.css";
 
@@ -9,11 +7,6 @@ export interface PeriodicElementProps {
 }
 
 function PeriodicElement(props: PeriodicElementProps) {
-  const [textColor, setTextColor] = useState({
-    color: "white",
-    fontWeight: 500,
-  });
-
   if (props.element == null) {
     return <span className="space-periodic"></span>;
   } else {

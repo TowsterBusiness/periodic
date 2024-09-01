@@ -1,5 +1,4 @@
-import { FormEventHandler, useRef, useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useRef, useState } from "react";
 import "./App.css";
 import PeriodicTable from "./PeriodicTable";
 import elementFile from "./assets/periodic_elements.json";
@@ -10,10 +9,6 @@ function App() {
   const [output, setOutput] = useState("Waiting...");
   const [elementList, setElementList] = useState([elementFile.elements[0]]);
   const refPeriodicTable = useRef(null);
-
-  var textbox: HTMLInputElement = document.getElementById(
-    "text-box"
-  ) as HTMLInputElement;
 
   var onInputHandler = (evt: any) => {
     var editedText: string = evt.target.value;
