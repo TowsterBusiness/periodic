@@ -1,38 +1,34 @@
-import React, { useImperativeHandle, forwardRef, useState } from "react";
-import elementFile from "./assets/periodic_elements.json";
+import { FormEventHandler, useState } from "react";
+import "./ElementCard.css";
 import { ElementJson } from "./ElementDataTypes";
-import "./PeriodicElement.css";
 
-export interface PeriodicElementProps {
-  element: ElementJson | null;
-  highlight: boolean;
+export interface ElementCardProp {
+  element: ElementJson;
 }
 
-const PeriodicElement = forwardRef((props: PeriodicElementProps, ref) => {
-  const [backgroundColor, setBackgroundColor] = useState("#00000000");
-
-  function triggerHighlight(isHighlight: boolean) {
-      console.log(isHighlight);
-      if (isHighlight) {
-        setBackgroundColor("#f0f55d0ff");
-      } else {
-        setBackgroundColor("#00000000");
-      }
-    },
-  };
-
-  if (props.element == null) {
-    return <span className="space-periodic"></span>;
+function ElementCard(props: ElementCardProp) {
+  let oxidization: String = "";
+  if (props.element.group <= 2) {
+    oxidization = "+" + props.element.group;
+  } else if (props.element.group <= 12) {
+    oxidization = "+?";
+  } else if (props.element.group <= 14) {
+    oxidization = "+" + (props.element.group - 10);
+  } else if (props.element.group <= 17) {
+    oxidization = "-" + (18 - props.element.group);
   } else {
-    return (
-      <span
-        className="element-periodic"
-        style={{ backgroundColor: backgroundColor }}
-      >
-        {props.element.symbol}
-      </span>
-    );
+    oxidization = "+0";
   }
-});
 
-export default PeriodicElement;
+  return (
+    <div className="container">
+      <h3 id="atm-number">{props.element.number}</h3>
+      <h2 id="atm-symbol">{props.element.symbol}</h2>
+      <h3 id="atm-name">{props.element.name}</h3>
+      <h3 id="atm-weight">{props.element.atomic_mass}</h3>
+      <h3 id="atm-oxidization">{oxidization}</h3>
+    </div>
+  );
+}
+
+export default ElementCard;
