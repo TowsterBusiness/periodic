@@ -4,10 +4,10 @@ import PeriodicElement from "./PeriodicElement";
 import elementFile from "./assets/periodic_elements.json";
 import { PeriodicElementProps } from "./PeriodicElement";
 
-const PeriodicTable = forwardRef((ref) => {
+const PeriodicTable = forwardRef((props, ref) => {
   let grid = [];
   let elementNumber = 0;
-  let [highlightHash] = useState(new Map());
+  let [highlightHash, setHighlightHash] = useState(new Map());
 
   useImperativeHandle(ref, () => {
     return {

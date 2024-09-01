@@ -1,5 +1,4 @@
-import React, { FormEventHandler, useRef, useState } from "react";
-import reactLogo from "./assets/react.svg";
+import React, { useState } from "react";
 import "./App.css";
 import PeriodicTable from "./PeriodicTable";
 import elementFile from "./assets/periodic_elements.json";
