@@ -1,14 +1,22 @@
-import { useRef, useState } from "react";
+import React, { FormEventHandler, useRef, useState } from "react";
+import reactLogo from "./assets/react.svg";
 import "./App.css";
 import PeriodicTable from "./PeriodicTable";
 import elementFile from "./assets/periodic_elements.json";
 import ElementCard from "./ElementCard";
 import { ElementJson } from "./ElementDataTypes";
 
+let previousChemicalList: Array<string>;
+
 function App() {
   const [output, setOutput] = useState("Waiting...");
   const [elementList, setElementList] = useState([elementFile.elements[0]]);
-  const refPeriodicTable = useRef(null);
+  const refPeriodicTable: React.ForwardedRef<any> =
+    React.createRef<HTMLDivElement | null>();
+
+  var textbox: HTMLInputElement = document.getElementById(
+    "text-box"
+  ) as HTMLInputElement;
 
   var onInputHandler = (evt: any) => {
     var editedText: string = evt.target.value;
@@ -36,10 +44,27 @@ function App() {
       var element: ElementJson | null = getElementBySymbol(chemical);
       if (element != null) {
         if (refPeriodicTable.current) {
-          refPeriodicTable.current.triggerHighlight(element.number, true);
+          refPeriodicTable.current?.triggerHighlight(element.number, true);
         }
+        elementList.push(element);
       }
     });
+
+    if (previousChemicalList != null) {
+      previousChemicalList.forEach((pElement) => {
+        let hasElement: boolean = false;
+        chemicalList.forEach((cElement) => {
+          if (pElement == cElement) hasElement = true;
+        });
+        if (hasElement == false) {
+          refPeriodicTable.current?.triggerHighlight(
+            getElementBySymbol(pElement)?.number,
+            false
+          );
+        }
+      });
+    }
+    previousChemicalList = chemicalList;
 
     setElementList(elementList);
     setOutput(moleculeWeight.toPrecision(4).toString());
