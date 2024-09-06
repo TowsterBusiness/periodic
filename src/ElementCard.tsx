@@ -24,7 +24,9 @@ function ElementCard(props: ElementCardProp) {
       <h3 id="atm-number">{props.element.number}</h3>
       <h2 id="atm-symbol">{props.element.symbol}</h2>
       <h3 id="atm-name">{props.element.name}</h3>
-      <h3 id="atm-weight">{props.element.atomic_mass}</h3>
+      <h3 id="atm-weight">
+        {Math.round(props.element.atomic_mass * 100) / 100}
+      </h3>
       <h3 id="atm-oxidization">{oxidization}</h3>
     </div>
   );
