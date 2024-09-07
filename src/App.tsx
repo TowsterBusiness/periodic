@@ -9,6 +9,7 @@ let previousChemicalList: Array<string>;
 
 function App() {
   const [output, setOutput] = useState("Waiting...");
+  const [formula, setFormula] = useState("Waiting...");
   const [elementList, setElementList] = useState([elementFile.elements[0]]);
   const refPeriodicTable: React.ForwardedRef<any> =
     React.createRef<HTMLDivElement | null>();
@@ -22,6 +23,12 @@ function App() {
 
     if (editedText == "") {
       setOutput("Waiting...");
+      setFormula("Waiting...");
+    }
+
+    let formula = atomicFormulaFromString(editedText);
+    if (formula != null) {
+      setFormula(formula);
     }
 
     // Chemical Number Check
@@ -66,7 +73,7 @@ function App() {
     previousChemicalList = chemicalList;
 
     setElementList(elementList);
-    setOutput(moleculeWeight.toPrecision(4).toString());
+    setOutput((Math.round(moleculeWeight * 1000) / 1000).toString());
   };
 
   return (
@@ -83,7 +90,9 @@ function App() {
         />
       </form>
       <div id="container"></div>
+      <h1 id="formula">{formula}</h1>
       <h1 id="test">{output}</h1>
+
       <div>
         {elementList.map((element, index) => {
           return <ElementCard key={index} element={element}></ElementCard>;
@@ -95,6 +104,9 @@ function App() {
         <a href="https://github.com/Bowserinator/Periodic-Table-JSON/blob/master/PeriodicTableJSON.json">
           here
         </a>
+        <br />
+        Socials: <span> </span>
+        <a href="https://discord.gg/NnT5werabb">discord</a>
       </h6>
     </div>
   );
@@ -193,6 +205,27 @@ function atomicMassFromString(s: string): number {
   }
 
   return numberBuilder;
+}
+
+function atomicFormulaFromString(s: String): string | void {
+  let index: number = 0;
+  let stringBuilder: string = "";
+  while (index < s.length) {
+    if (s.charAt(index) != ".") {
+      stringBuilder += s.charAt(index);
+      index++;
+      continue;
+    }
+
+    index++;
+    if (s.charCodeAt(index) < 49 || s.charCodeAt(index) > 59) return;
+
+    while (s.charCodeAt(index) >= 49 && s.charCodeAt(index) <= 59) {
+      stringBuilder += String.fromCharCode(s.charCodeAt(index) + 8272);
+      index++;
+    }
+  }
+  return stringBuilder;
 }
 
 export default App;
