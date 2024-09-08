@@ -86,6 +86,7 @@ function App() {
           type="text"
           id="text-box"
           autoComplete="off"
+          autoCapitalize="off"
           onInput={onInputHandler}
         />
       </form>

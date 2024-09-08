@@ -10,13 +10,13 @@
 }
 
 #text-box {
+  border: 3px solid #ab68d3;
   border-radius: 20px;
-  border-width: 3px;
-  border-color: plum;
   height: 30px;
   width: 50%;
   font-size: 20px;
   padding-left: 10px;
+  outline: none;
 }
 
 #text-box:focus {
