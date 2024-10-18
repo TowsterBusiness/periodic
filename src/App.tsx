@@ -53,7 +53,7 @@ function App() {
       } else {
         let moleculeListTemp: string[] = searchMoleculeName(text, 5);
         setMoleculeList(moleculeListTemp);
-        if (moleculeList.length == 1) {
+        if (moleculeList.length > 1) {
           setMoleculeName(moleculeListTemp[0]);
         }
       }
@@ -155,6 +155,7 @@ function App() {
       <h1>⚛️ Periodic ⚛️</h1>
       <p>Finds the atomic weights of atoms and molecules</p>
       <p>Ex. "(NH.4).3PO.4" would be (NH₄)₃PO₄</p>
+      <p>Hint: use $ at the front to see many molecules</p>
       <form id="main-input" className="noselect">
         <input
           type="text"
