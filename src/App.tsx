@@ -48,14 +48,10 @@ function App() {
     if (editedText.charAt(0) == "$") {
       setState(States.MOLECULE_STRUCTURE);
       let text = editedText.slice(1);
-      if (text == "") {
-        setMoleculeList([]);
-      } else {
-        let moleculeListTemp: string[] = searchMoleculeName(text, 5);
-        setMoleculeList(moleculeListTemp);
-        if (moleculeList.length > 1) {
-          setMoleculeName(moleculeListTemp[0]);
-        }
+      let moleculeListTemp: string[] = searchMoleculeName(text, 5);
+      setMoleculeList(moleculeListTemp);
+      if (moleculeList.length > 1) {
+        setMoleculeName(moleculeListTemp[0]);
       }
     } else {
       setState(States.ATOMIC_MASS);
