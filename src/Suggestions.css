@@ -1,0 +1,11 @@
+.name {
+  border-radius: 10px;
+  margin: 0 auto;
+  width: auto;
+}
+
+.suggestion_container {
+  display: grid;
+  border: none;
+  width: auto;
+}

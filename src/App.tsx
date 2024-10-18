@@ -4,15 +4,39 @@ import PeriodicTable from "./PeriodicTable";
 import elementFile from "./assets/periodic_elements.json";
 import ElementCard from "./ElementCard";
 import { ElementJson } from "./ElementDataTypes";
+import moleculeListFile from "./assets/molecule_list.json";
+import Suggestions from "./Suggestions";
+import MoleculeModel from "./MoleculeModel";
 
 let previousChemicalList: Array<string>;
+let IPAdress: String;
+let lastChemicalName: String = "";
+let lastChemicalTime: number = Number.MAX_VALUE;
+
+enum States {
+  ATOMIC_MASS,
+  MOLECULE_STRUCTURE,
+}
 
 function App() {
   const [output, setOutput] = useState("Waiting...");
   const [formula, setFormula] = useState("Waiting...");
   const [elementList, setElementList] = useState([elementFile.elements[0]]);
+  const [moleculeList, setMoleculeList] = useState([""]);
+  const [moleculeName, setMoleculeName] = useState("");
+  const [state, setState] = useState(States.ATOMIC_MASS);
   const refPeriodicTable: React.ForwardedRef<any> =
     React.createRef<HTMLDivElement | null>();
+
+  // Future databasing program for: common formulas or molcules ect
+  // fetch("https://api.ipify.org?format=json")
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     IPAdress = data.ip;
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error fetching IP address:", error);
+  //   });
 
   var textbox: HTMLInputElement = document.getElementById(
     "text-box"
@@ -21,59 +45,109 @@ function App() {
   var onInputHandler = (evt: any) => {
     var editedText: string = evt.target.value;
 
-    if (editedText == "") {
-      setOutput("Waiting...");
-      setFormula("Waiting...");
-    }
-
-    let formula = atomicFormulaFromString(editedText);
-    if (formula != null) {
-      setFormula(formula);
-    }
-
-    // Chemical Number Check
-    elementFile["elements"].forEach((element: ElementJson) => {
-      if (editedText == element.number.toString()) {
-        setOutput(element.name);
-      }
-    });
-
-    var chemicalList: Array<string> = editedText
-      .replaceAll(new RegExp("\\(|\\)|[0-9]|\\.", "g"), "")
-      .split(new RegExp("(?=[A-Z])"));
-    console.log(chemicalList);
-
-    var elementList: Array<ElementJson> = [];
-    var moleculeWeight: number = atomicMassFromString(editedText);
-
-    chemicalList.forEach((chemical) => {
-      var element: ElementJson | null = getElementBySymbol(chemical);
-      if (element != null) {
-        if (refPeriodicTable.current) {
-          refPeriodicTable.current?.triggerHighlight(element.number, true);
+    if (editedText.charAt(0) == "$") {
+      setState(States.MOLECULE_STRUCTURE);
+      let text = editedText.slice(1);
+      if (text == "") {
+        setMoleculeList([]);
+      } else {
+        let moleculeListTemp: string[] = searchMoleculeName(text, 5);
+        setMoleculeList(moleculeListTemp);
+        if (moleculeList.length == 1) {
+          setMoleculeName(moleculeListTemp[0]);
         }
-        elementList.push(element);
       }
-    });
+    } else {
+      setState(States.ATOMIC_MASS);
+      if (editedText == "") {
+        setOutput("Waiting...");
+        setFormula("Waiting...");
+      }
 
-    if (previousChemicalList != null) {
-      previousChemicalList.forEach((pElement) => {
-        let hasElement: boolean = false;
-        chemicalList.forEach((cElement) => {
-          if (pElement == cElement) hasElement = true;
-        });
-        if (hasElement == false) {
-          refPeriodicTable.current?.triggerHighlight(
-            getElementBySymbol(pElement)?.number,
-            false
-          );
+      let formula = atomicFormulaFromString(editedText);
+      if (formula != null) {
+        setFormula(formula);
+      }
+
+      // Chemical Number Check
+      elementFile["elements"].forEach((element: ElementJson) => {
+        if (editedText == element.number.toString()) {
+          setOutput(element.name);
         }
       });
-    }
-    previousChemicalList = chemicalList;
 
-    setElementList(elementList);
-    setOutput((Math.round(moleculeWeight * 1000) / 1000).toString());
+      var chemicalList: Array<string> = editedText
+        .replaceAll(new RegExp("\\(|\\)|[0-9]|\\.", "g"), "")
+        .split(new RegExp("(?=[A-Z])"));
+      console.log(chemicalList);
+
+      var elementList: Array<ElementJson> = [];
+      var moleculeWeight: number = atomicMassFromString(editedText);
+
+      chemicalList.forEach((chemical) => {
+        var element: ElementJson | null = getElementBySymbol(chemical);
+        if (element != null) {
+          if (refPeriodicTable.current) {
+            refPeriodicTable.current?.triggerHighlight(element.number, true);
+          }
+          elementList.push(element);
+        }
+      });
+
+      if (previousChemicalList != null) {
+        previousChemicalList.forEach((pElement) => {
+          let hasElement: boolean = false;
+          chemicalList.forEach((cElement) => {
+            if (pElement == cElement) hasElement = true;
+          });
+          if (hasElement == false) {
+            refPeriodicTable.current?.triggerHighlight(
+              getElementBySymbol(pElement)?.number,
+              false
+            );
+          }
+        });
+      }
+      previousChemicalList = chemicalList;
+
+      setElementList(elementList);
+      setOutput((Math.round(moleculeWeight * 1000) / 1000).toString());
+
+      console.log(Date.now() - lastChemicalTime);
+      if (Date.now() > lastChemicalTime + 3000 && lastChemicalName != "") {
+        // sendContent(IPAdress, lastChemicalName);
+      }
+      lastChemicalTime = Date.now();
+      lastChemicalName = editedText;
+    }
+  };
+
+  const renderMolecule = () => {
+    if (moleculeList.length > 0) {
+      return (
+        <>
+          <Suggestions suggestions={moleculeList}></Suggestions>
+          <MoleculeModel moleculeName={moleculeName}></MoleculeModel>
+        </>
+      );
+    }
+  };
+
+  const renderAtomicMass = () => {
+    return (
+      <>
+        <div id="container"></div>
+        <h1 id="formula">{formula}</h1>
+        <h1 id="test">{output}</h1>
+
+        <div>
+          {elementList.map((element, index) => {
+            return <ElementCard key={index} element={element}></ElementCard>;
+          })}
+        </div>
+        <PeriodicTable ref={refPeriodicTable}></PeriodicTable>
+      </>
+    );
   };
 
   return (
@@ -90,16 +164,11 @@ function App() {
           onInput={onInputHandler}
         />
       </form>
-      <div id="container"></div>
-      <h1 id="formula">{formula}</h1>
-      <h1 id="test">{output}</h1>
 
-      <div>
-        {elementList.map((element, index) => {
-          return <ElementCard key={index} element={element}></ElementCard>;
-        })}
-      </div>
-      <PeriodicTable ref={refPeriodicTable}></PeriodicTable>
+      {state == States.MOLECULE_STRUCTURE ? renderMolecule() : <></>}
+
+      {state == States.ATOMIC_MASS ? renderAtomicMass() : <></>}
+
       <h6>
         All elements derived from{" "}
         <a href="https://github.com/Bowserinator/Periodic-Table-JSON/blob/master/PeriodicTableJSON.json">
@@ -111,6 +180,22 @@ function App() {
       </h6>
     </div>
   );
+}
+
+function searchMoleculeName(search: string, index: number): string[] {
+  let counter = 0;
+  let overrideName = "";
+  let list = moleculeListFile.molecule_list.filter((moleculeName) => {
+    if (moleculeName == search) overrideName = moleculeName;
+    if (counter > index) return false;
+    if (moleculeName.search(search) != -1) {
+      counter++;
+      return true;
+    }
+    return false;
+  });
+  if (overrideName != "") return [overrideName];
+  return list;
 }
 
 function getElementBySymbol(s: string): ElementJson | null {
@@ -227,6 +312,30 @@ function atomicFormulaFromString(s: String): string | void {
     }
   }
   return stringBuilder;
+}
+
+function sendContent(ip: String, content: String) {
+  const data = { ip: ip, content: content };
+
+  fetch("http://localhost:4000/counter", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Response from server:", data);
+    })
+    .catch((error) => {
+      console.error("Error submitting data:", error);
+    });
 }
 
 export default App;

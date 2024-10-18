@@ -1,0 +1,480 @@
+{
+   "elements": [
+      {
+         "symbol": "H",
+         "color": "#bdd1ff"
+      },
+      {
+         "symbol": "He",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Li",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Be",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "B",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "C",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "N",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "O",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "F",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ne",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Na",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Mg",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Al",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Si",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "P",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "S",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Cl",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ar",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "K",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ca",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Sc",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ti",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "V",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Cr",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Mn",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Fe",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Co",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ni",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Cu",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Zn",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ga",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ge",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "As",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Se",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Br",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Kr",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Rb",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Sr",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Y",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Zr",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Nb",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Mo",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Tc",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ru",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Rh",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Pd",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ag",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Cd",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "In",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Sn",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Sb",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Te",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "I",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Xe",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Cs",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ba",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "La",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ce",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Pr",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Nd",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Pm",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Sm",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Eu",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Gd",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Tb",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Dy",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ho",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Er",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Tm",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Yb",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Lu",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Hf",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ta",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "W",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Re",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Os",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ir",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Pt",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Au",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Hg",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Tl",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Pb",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Bi",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Po",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "At",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Rn",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Fr",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ra",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ac",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Th",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Pa",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "U",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Np",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Pu",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Am",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Cm",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Bk",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Cf",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Es",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Fm",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Md",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "No",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Lr",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Rf",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Db",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Sg",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Bh",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Hs",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Mt",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ds",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Rg",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Cn",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Nh",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Fl",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Mc",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Lv",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Ts",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Og",
+         "color": "#dddddd"
+      },
+      {
+         "symbol": "Uue",
+         "color": "#dddddd"
+      }
+   ]
+}

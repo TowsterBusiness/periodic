@@ -1,0 +1,55 @@
+{
+   "type": "coordination",
+   "chemicalJson": 1,
+   "atoms": {
+      "coords": {
+         "3d": [
+            -0.244357,
+            0.202456,
+            -0.005114,
+            0.766158,
+            0.178356,
+            0.036114,
+            -0.559014,
+            -0.758168,
+            0.036009,
+            -0.558647,
+            0.647176,
+            0.847471
+         ]
+      },
+      "elements": {
+         "number": [
+            7,
+            1,
+            1,
+            1
+         ]
+      },
+      "formalCharges": [
+         0,
+         0,
+         0,
+         0
+      ]
+   },
+   "bonds": {
+      "connections": {
+         "index": [
+            0,
+            2,
+            0,
+            1,
+            0,
+            3
+         ]
+      },
+      "order": [
+         1,
+         1,
+         1
+      ]
+   },
+   "name": "3 trigonal pyramidal",
+   "totalCharge": 0
+}

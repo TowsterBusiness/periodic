@@ -1,0 +1,55 @@
+{
+   "type": "coordination",
+   "chemicalJson": 1,
+   "atoms": {
+      "coords": {
+         "3d": [
+            -0.242214,
+            0.199378,
+            -0.0,
+            0.949348,
+            0.199379,
+            0.0,
+            -0.837965,
+            -0.832554,
+            0.0,
+            -0.837969,
+            1.231307,
+            0.0
+         ]
+      },
+      "elements": {
+         "number": [
+            5,
+            1,
+            1,
+            1
+         ]
+      },
+      "formalCharges": [
+         0,
+         0,
+         0,
+         0
+      ]
+   },
+   "bonds": {
+      "connections": {
+         "index": [
+            0,
+            1,
+            0,
+            2,
+            0,
+            3
+         ]
+      },
+      "order": [
+         1,
+         1,
+         1
+      ]
+   },
+   "name": "3 trigonal planar",
+   "totalCharge": 0
+}
