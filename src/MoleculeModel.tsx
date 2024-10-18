@@ -153,7 +153,13 @@ function MoleculeModel(props: MoleculeModelProp) {
               context.moveTo(point1[0], point1[1]);
               context.lineTo(point2[0], point2[1]);
               context.lineCap = "round";
-              context.strokeStyle = "#ab68d3";
+              if (bonds[i][2] == 1) {
+                context.strokeStyle = "#ab68d3";
+              } else if (bonds[i][2] == 2) {
+                context.strokeStyle = "#8cffa7";
+              } else if (bonds[i][2] == 3) {
+                context.strokeStyle = "#ffe08c";
+              }
               context.lineWidth = 5;
               context.stroke();
 
