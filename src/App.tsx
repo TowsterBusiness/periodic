@@ -78,7 +78,9 @@ function App() {
       console.log(chemicalList);
 
       var elementList: Array<ElementJson> = [];
+
       var moleculeWeight: number = atomicMassFromString(editedText);
+      console.log(calculatorFromString(editedText));
 
       chemicalList.forEach((chemical) => {
         var element: ElementJson | null = getElementBySymbol(chemical);
@@ -203,6 +205,29 @@ function getElementBySymbol(s: string): ElementJson | null {
     }
   });
   return elementFin;
+}
+
+function calculatorFromString(s: String): number {
+  let pointer = 0;
+
+  let builder: Array<number | String> = [];
+  let individualBuilder: String = "";
+
+  while (pointer < s.length) {
+    const c = s.charAt(pointer);
+    if (RegExp("[0-9]").test(c)) {
+      individualBuilder += c;
+    } else if (RegExp("*|/|+|-").test(c)) {
+      builder.push(parseFloat(individualBuilder.toString()));
+      individualBuilder = "";
+      builder.push(c);
+    }
+    pointer++;
+  }
+  builder.push(parseFloat(individualBuilder.toString()));
+
+  for (let i = 0; i < builder.length; i++) {}
+  return 0;
 }
 
 function atomicMassFromString(s: string): number {
