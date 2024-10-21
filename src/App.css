@@ -22,3 +22,13 @@
 #text-box:focus {
   outline-width: 0;
 }
+
+#chattext {
+  border: 2px solid #ab68d3;
+  border-radius: 20px;
+  padding: 20px;
+  padding-left: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+}
