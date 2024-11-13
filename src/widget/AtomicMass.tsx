@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import elementFile from "../assets/periodic_elements.json";
 import { ElementJson } from "../ElementDataTypes";
 import ElementCard from "../ElementCard";
@@ -11,13 +11,13 @@ export interface AtomicMassProp {
 let lastChemicalName: String = "";
 let lastChemicalTime: number = Number.MAX_VALUE;
 let previousChemicalList: Array<string>;
-const refPeriodicTable: React.ForwardedRef<HTMLDivElement> =
-  React.createRef<HTMLDivElement>();
 
 function AtomicMass(props: AtomicMassProp) {
   let output = "Waiting...";
   let formula = "Waiting...";
   let elementList = [elementFile.elements[0]];
+  let isEval = false;
+  const refPeriodicTable = useRef<any>(null);
 
   let text = props.text;
 
@@ -27,12 +27,13 @@ function AtomicMass(props: AtomicMassProp) {
   }
 
   if (RegExp("\\*|\\/|\\+|-", "g").test(text)) {
-    console.log("Using eval");
     try {
-      output = eval(text);
+      output = calculatorFromString(text).toPrecision(10);
       formula = "";
+      isEval = true;
     } catch (error) {}
   } else {
+    isEval = false;
     let tempFormula = atomicFormulaFromString(text);
     if (tempFormula != null) {
       formula = tempFormula;
@@ -51,9 +52,6 @@ function AtomicMass(props: AtomicMassProp) {
     console.log(chemicalList);
 
     elementList = [];
-
-    var moleculeWeight: number = atomicMassFromString(text);
-    console.log(calculatorFromString(text));
 
     chemicalList.forEach((chemical) => {
       var element: ElementJson | null = getElementBySymbol(chemical);
@@ -82,7 +80,11 @@ function AtomicMass(props: AtomicMassProp) {
     previousChemicalList = chemicalList;
 
     elementList = elementList;
-    output = Math.round((moleculeWeight * 1000) / 1000).toString();
+
+    var moleculeWeight: number = atomicMassFromString(text);
+    console.log(moleculeWeight);
+    output = moleculeWeight.toPrecision(10);
+
     // console.log(Date.now() - lastChemicalTime);
     // if (Date.now() > lastChemicalTime + 3000 && lastChemicalName != "") {
     //   sendContent(IPAdress, lastChemicalName);
@@ -98,11 +100,16 @@ function AtomicMass(props: AtomicMassProp) {
       <h1 id="test">{output}</h1>
 
       <div>
-        {elementList.map((element, index) => {
-          return <ElementCard key={index} element={element}></ElementCard>;
-        })}
+        {isEval ? (
+          <></>
+        ) : (
+          elementList.map((element, index) => {
+            return <ElementCard key={index} element={element}></ElementCard>;
+          })
+        )}
       </div>
-      <PeriodicTable ref={refPeriodicTable}></PeriodicTable>
+
+      {isEval ? <></> : <PeriodicTable ref={refPeriodicTable}></PeriodicTable>}
     </>
   );
 }
@@ -117,29 +124,51 @@ function getElementBySymbol(s: string): ElementJson | null {
   return elementFin;
 }
 
-function calculatorFromString(s: String): number {
-  let builder: Array<number | String> = [];
-  let individualBuilder: String = "";
+function calculatorFromString(s: string): number {
+  var pointer1: number = 0;
+  let builderString = s;
+  const sLength = s.length;
+  while (pointer1 < sLength) {
+    console.log(s.charAt(pointer1));
+    if (s.charAt(pointer1) == "(") {
+      var startPointer = pointer1;
+      var passStr: string | null = null;
+      var counter: number = 0;
+      while (pointer1 < s.length) {
+        if (s.charAt(pointer1) == "(") {
+          counter++;
+        } else if (s.charAt(pointer1) == ")") {
+          counter--;
+          if (counter <= 0) {
+            passStr = s.substring(startPointer + 1, pointer1);
+            pointer1++;
+            break;
+          }
+        }
+        pointer1++;
+      }
 
-  for (let pointer = 0; pointer < s.length; pointer++) {
-    const c = s.charAt(pointer);
-    if (RegExp("[0-9]").test(c)) {
-      individualBuilder += c;
-    } else if (RegExp("\\*|\\/|\\+|-").test(c)) {
-      builder.push(parseFloat(individualBuilder.toString()));
-      console.log("builder1", builder);
-      individualBuilder = "";
-      builder.push(c);
-      console.log("builder2", builder);
+      console.log(passStr);
+
+      if (passStr != null) {
+        if (RegExp("\\*|\\/|\\+|-", "g").test(passStr)) {
+          builderString = builderString.replace(
+            passStr,
+            calculatorFromString(passStr).toString()
+          );
+        } else {
+          builderString = builderString.replace(
+            passStr,
+            atomicMassFromString(passStr).toString()
+          );
+        }
+      }
+    } else {
+      pointer1++;
     }
-    pointer++;
   }
-  builder.push(parseFloat(individualBuilder.toString()));
-
-  console.log("builder", builder);
-
-  for (let i = 0; i < builder.length; i++) {}
-  return 0;
+  console.log(builderString);
+  return parseFloat(eval(builderString));
 }
 
 function atomicMassFromString(s: string): number {
@@ -205,7 +234,6 @@ function atomicMassFromString(s: string): number {
           coefficientBuilder += parseInt(s.charAt(pointer1));
           pointer1++;
         }
-        console.log(coefficientBuilder);
       }
 
       if (passStr == null) {
