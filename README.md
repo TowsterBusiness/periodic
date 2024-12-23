@@ -1,69 +1,25 @@
 # Periodic
 
-This project creates a periodic table that you can type in so you can ge the answers you want!
+This project creates a periodic table that you can type in so you can ge the answers you want all in one textbox using different prefixes. 
 
-The instructions are in the top of the page
+Features:
+* Atomic Weight Calculator
+* Moveable 3d molecule model (made from scratch)
+* Summarized AI helper
+* Search feature based on past searches on a search tree.
 
-![ss](ss.png)
+What is this app for?...
 
-# How to use the program
+Originally, to find the atomic weights of atoms and molecules
+Ex. "(NH4)3PO4" would be (NH₄)₃PO₄
 
-Theres only 5 steps to runthe program,
-1. Install [Node](https://nodejs.org/en)
-2. Download this repository by using git or just downloading the zip
-3. There should be a new folder so open the terminal or comand prompht on that folder
-4. Them type `npm install`
-5. Then type `npm run dev`
+But theres more features in the textbox...
+A single element in the textbox displays more info about that element
 
-easy as that!!
+Prefix "$" shows 3d simulations of any organic molecule
+Ex. $cyclohexanol
 
-# React + TypeScript + Vite
+Prefix "?" starts your personal AP Chemistry helper :o
+Ex. ?How do I do stoicheometry
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+It also includes a search algorithm using a search tree that queries the last time you searched for that molecule and how many times you searched for it. 
