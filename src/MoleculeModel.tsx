@@ -37,8 +37,6 @@ function MoleculeModel(props: MoleculeModelProp) {
   }, [props.moleculeName]);
 
   useEffect(() => {
-    console.log("Effect Run");
-
     const canvas = canvasRef.current;
     if (canvas) {
       const context = canvas.getContext("2d");

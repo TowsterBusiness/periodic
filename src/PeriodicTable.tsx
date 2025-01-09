@@ -4,31 +4,29 @@ import PeriodicElement from "./PeriodicElement";
 import elementFile from "./assets/periodic_elements.json";
 import { PeriodicElementProps } from "./PeriodicElement";
 
-const PeriodicTable = forwardRef((props, ref) => {
+export interface PeriodicTableProps {
+  elementList: Array<number>;
+}
+
+const PeriodicTable = forwardRef((props: PeriodicTableProps, ref) => {
   let grid = [];
   let elementNumber = 0;
-  let [highlightHash, setHighlightHash] = useState(new Map());
+  let highlightHash = new Map();
 
-  useImperativeHandle(ref, () => {
-    return {
-      triggerHighlight(atmNum: number, isHighlight: boolean) {
-        highlightHash.set(atmNum, isHighlight);
-      },
-    };
-  });
+  for (let elementNumber in props.elementList) {
+    highlightHash.set(props.elementList[elementNumber], true);
+  }
 
   for (let y = 0; y < 11; y++) {
     let row = [];
     for (let x = 0; x < 18; x++) {
       let element = elementFile.elements[elementNumber];
 
-      if (!highlightHash.has(element.number)) {
-        highlightHash.set(element.number, false);
-      }
-
-      let props: PeriodicElementProps = {
+      let elementProps: PeriodicElementProps = {
         element: element,
-        isHighlight: highlightHash.get(element.number),
+        isHighlight: highlightHash.has(element.number)
+          ? highlightHash.get(element.number)
+          : false,
       };
 
       if (element.xpos - 1 == x && element.ypos - 1 == y) {
@@ -44,11 +42,14 @@ const PeriodicTable = forwardRef((props, ref) => {
           elementNumber++;
         }
       } else {
-        props.element = null;
+        elementProps.element = null;
       }
 
       let elementHtml = (
-        <PeriodicElement key={crypto.randomUUID()} {...props}></PeriodicElement>
+        <PeriodicElement
+          key={crypto.randomUUID()}
+          {...elementProps}
+        ></PeriodicElement>
       );
 
       row.push(elementHtml);

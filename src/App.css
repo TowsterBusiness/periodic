@@ -10,25 +10,79 @@
 }
 
 #text-box {
-  border: 3px solid #ab68d3;
-  border-radius: 20px;
   height: 30px;
-  width: 50%;
+  width: 100%;
   font-size: 20px;
   padding-left: 10px;
   outline: none;
+  border-radius: 20px; /* Rounded corners for the input */
+  /* Background color inside the textbox */
+  border: none; /* Remove default border */
+  position: relative; /* Allow text to appear above the pseudo-element */
+  z-index: 1; /* Ensure the input is above the pseudo-element */
+}
+#text-box-outline {
+  position: relative; /* Required for positioning the pseudo-element */
+  display: inline-block; /* Makes the container fit the size of the input */
+  width: 50%;
+}
+#text-box-outline::before {
+  content: ""; /* Empty content to create the pseudo-element */
+  position: absolute; /* Position it around the input field */
+  top: -3px; /* Position the border slightly outside the input */
+  left: -3px;
+  right: -13px;
+  bottom: -3px;
+  background-image: linear-gradient(
+    to right,
+    #ab68d3 0%,
+    #6c78bc 100%
+  ); /* Gradient border */
+  border-radius: 20px; /* Match the rounded corners of the input */
+  z-index: 0;
 }
 
 #text-box:focus {
   outline-width: 0;
 }
 
+#chattext::before {
+  content: "";
+}
 #chattext {
-  border: 2px solid #ab68d3;
+  /* border: 2px solid #ab68d3; */
+  background-image: linear-gradient(to right, #70448a 0%, #343d6b 100%);
   border-radius: 20px;
-  padding: 20px;
-  padding-left: 30px;
+  padding: 40px;
+  padding-left: 60px;
+  padding-right: 60px;
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: left;
+}
+
+.link {
+  color: #468dff;
+}
+
+.autocomplete-container {
+  display: flex;
+  justify-content: center;
+}
+
+.suggestions-list {
+  width: 50%;
+  border: 1px solid #ccc;
+  justify-self: center;
+  border-radius: 20px;
+}
+
+.suggestion-item {
+  padding: 8px;
+  list-style-type: none;
+}
+
+.suggestion-item.active {
+  border-radius: 20px;
+  background-color: #515151;
 }

@@ -10,7 +10,6 @@ export interface MoleculeDisplayProp {
 function MoleculeDisplay(props: MoleculeDisplayProp) {
   let moleculeList = [""];
   let moleculeName = "";
-  console.log(123);
   let input = props.text;
 
   let moleculeListTemp: string[] = searchMoleculeName(input, 5);

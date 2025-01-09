@@ -3,12 +3,13 @@ import elementFile from "../assets/periodic_elements.json";
 import { ElementJson } from "../ElementDataTypes";
 import ElementCard from "../ElementCard";
 import PeriodicTable from "../PeriodicTable";
+import { sendContent } from "../Backend";
 
 export interface AtomicMassProp {
   text: string;
 }
 
-let lastChemicalName: String = "";
+let lastChemicalName: string = "";
 let lastChemicalTime: number = Number.MAX_VALUE;
 let previousChemicalList: Array<string>;
 
@@ -49,16 +50,12 @@ function AtomicMass(props: AtomicMassProp) {
     var chemicalList: Array<string> = text
       .replaceAll(new RegExp("\\(|\\)|[0-9]|\\.", "g"), "")
       .split(new RegExp("(?=[A-Z])"));
-    console.log(chemicalList);
 
     elementList = [];
 
     chemicalList.forEach((chemical) => {
       var element: ElementJson | null = getElementBySymbol(chemical);
       if (element != null) {
-        if (refPeriodicTable != null && refPeriodicTable.current) {
-          refPeriodicTable.current.triggerHighlight(element.number, true);
-        }
         elementList.push(element);
       }
     });
@@ -81,16 +78,16 @@ function AtomicMass(props: AtomicMassProp) {
 
     elementList = elementList;
 
-    var moleculeWeight: number = atomicMassFromString(text);
-    console.log(moleculeWeight);
+    var moleculeWeight: number = atomicMassFromString2(text);
     output = moleculeWeight.toPrecision(10);
 
-    // console.log(Date.now() - lastChemicalTime);
-    // if (Date.now() > lastChemicalTime + 3000 && lastChemicalName != "") {
-    //   sendContent(IPAdress, lastChemicalName);
-    // }
-    // lastChemicalTime = Date.now();
-    // lastChemicalName = text;
+    console.log(Date.now() - lastChemicalTime);
+    if (Date.now() > lastChemicalTime + 3000 && lastChemicalName != "") {
+      console.log("Submitted", lastChemicalName);
+      sendContent(lastChemicalName);
+    }
+    lastChemicalTime = Date.now();
+    lastChemicalName = text;
   }
 
   return (
@@ -98,6 +95,8 @@ function AtomicMass(props: AtomicMassProp) {
       <div id="container"></div>
       <h1 id="formula">{formula}</h1>
       <h1 id="test">{output}</h1>
+
+      {isEval ? <></> : <hr></hr>}
 
       <div>
         {isEval ? (
@@ -109,12 +108,21 @@ function AtomicMass(props: AtomicMassProp) {
         )}
       </div>
 
-      {isEval ? <></> : <PeriodicTable ref={refPeriodicTable}></PeriodicTable>}
+      {isEval ? <></> : <hr></hr>}
+
+      {isEval ? (
+        <></>
+      ) : (
+        <PeriodicTable
+          elementList={elementList.map((element) => element.number)}
+          ref={refPeriodicTable}
+        ></PeriodicTable>
+      )}
     </>
   );
 }
 
-function getElementBySymbol(s: string): ElementJson | null {
+export function getElementBySymbol(s: string): ElementJson | null {
   var elementFin = null;
   elementFile["elements"].forEach((element: ElementJson) => {
     if (s == element.symbol) {
@@ -159,7 +167,7 @@ function calculatorFromString(s: string): number {
         } else {
           builderString = builderString.replace(
             passStr,
-            atomicMassFromString(passStr).toString()
+            atomicMassFromString2(passStr).toString()
           );
         }
       }
@@ -171,109 +179,97 @@ function calculatorFromString(s: string): number {
   return parseFloat(eval(builderString));
 }
 
-function atomicMassFromString(s: string): number {
-  var pointer1: number = 0;
-
-  var numberBuilder = 0;
-
-  while (pointer1 < s.length) {
-    if (RegExp("[A-Z]").test(s.charAt(pointer1))) {
-      let stringBuilder = s.charAt(pointer1);
-      pointer1++;
-      while (RegExp("[a-z]").test(s.charAt(pointer1))) {
-        // Error here for 1 lettered items
-        stringBuilder += s.charAt(pointer1);
-        pointer1++;
-      }
-
-      var coefficientBuilder = 1;
-      if (s.charAt(pointer1) == ".") {
-        coefficientBuilder = 0;
-        pointer1++;
-        while (
-          pointer1 < s.length &&
-          new RegExp("[0-9]").test(s.charAt(pointer1))
-        ) {
-          coefficientBuilder *= 10;
-          coefficientBuilder += parseInt(s.charAt(pointer1));
-          pointer1++;
-        }
-      }
-
-      let element = getElementBySymbol(stringBuilder);
-      if (element != null) {
-        numberBuilder += element.atomic_mass * coefficientBuilder;
-      }
-    } else if (s.charAt(pointer1) == "(") {
-      var startPointer = pointer1;
-      var passStr: string | null = null;
-      var counter: number = 0;
-      while (pointer1 < s.length) {
-        if (s.charAt(pointer1) == "(") {
-          counter++;
-        } else if (s.charAt(pointer1) == ")") {
-          counter--;
-          if (counter <= 0) {
-            passStr = s.substring(startPointer + 1, pointer1);
-            pointer1++;
-            break;
-          }
-        }
-        pointer1++;
-      }
-
-      var coefficientBuilder = 1;
-      if (s.charAt(pointer1) == ".") {
-        coefficientBuilder = 0;
-        pointer1++;
-        while (
-          pointer1 < s.length &&
-          new RegExp("[0-9]").test(s.charAt(pointer1))
-        ) {
-          coefficientBuilder *= 10;
-          coefficientBuilder += parseInt(s.charAt(pointer1));
-          pointer1++;
-        }
-      }
-
-      if (passStr == null) {
-        console.error(
-          "Hey!, ",
-          pointer1,
-          "index, ",
-          s.charAt(pointer1),
-          "doesn't have an element"
-        );
-      } else {
-        numberBuilder += atomicMassFromString(passStr) * coefficientBuilder;
-      }
-    } else {
-      pointer1++;
-    }
-  }
-
-  return numberBuilder;
-}
-
 function atomicFormulaFromString(s: String): string | void {
   let index: number = 0;
   let stringBuilder: string = "";
   while (index < s.length) {
-    if (s.charAt(index) != ".") {
+    if (new RegExp("[A-z]").test(s.charAt(index))) {
       stringBuilder += s.charAt(index);
       index++;
-      continue;
-    }
-
-    index++;
-    if (s.charCodeAt(index) < 49 || s.charCodeAt(index) > 59) return;
-
-    while (s.charCodeAt(index) >= 49 && s.charCodeAt(index) <= 59) {
+    } else if (s.charCodeAt(index) >= 48 && s.charCodeAt(index) <= 58) {
       stringBuilder += String.fromCharCode(s.charCodeAt(index) + 8272);
+      index++;
+    } else {
       index++;
     }
   }
   return stringBuilder;
+}
+
+function atomicMassFromString2(s: String): number {
+  let pointer = 0;
+  let coefficient = 0;
+  while (isNumber(s.charAt(pointer))) {
+    coefficient *= 10;
+    coefficient += parseInt(s.charAt(pointer));
+    pointer++;
+  }
+  if (coefficient == 0) {
+    coefficient = 1;
+  }
+
+  let numberBuilder = 0;
+  while (pointer < s.length) {
+    const c = s.charAt(pointer);
+
+    let currentNumber = 0;
+    if (c == "(") {
+      let counter: number = 1;
+      let innerFormula: string = "";
+      pointer++;
+
+      while (counter > 0) {
+        const innerC = s.charAt(pointer);
+        if (innerC == "") {
+          break;
+        } else if (innerC == "(") {
+          counter++;
+        } else if (innerC == ")") {
+          counter--;
+        } else {
+          innerFormula += innerC;
+        }
+        pointer++;
+      }
+
+      currentNumber = atomicMassFromString2(innerFormula);
+    } else if (new RegExp("[A-Z]").test(c)) {
+      let elementName: string = c;
+      pointer++;
+      while (new RegExp("[a-z]").test(s.charAt(pointer))) {
+        elementName += s.charAt(pointer);
+        pointer++;
+      }
+      let element = getElementBySymbol(elementName);
+      if (element) {
+        currentNumber = element.atomic_mass;
+      } else {
+        console.error();
+        currentNumber = 0;
+      }
+    } else {
+      pointer++;
+    }
+
+    if (isNumber(s.charAt(pointer))) {
+      let innerCoefficient = 0;
+      while (isNumber(s.charAt(pointer))) {
+        innerCoefficient *= 10;
+        innerCoefficient += parseInt(s.charAt(pointer));
+        pointer++;
+      }
+      numberBuilder += currentNumber * innerCoefficient;
+    } else {
+      numberBuilder += currentNumber;
+    }
+  }
+
+  return numberBuilder * coefficient;
+}
+
+const isNumberRegEx = new RegExp("[0-9]");
+function isNumber(c: string) {
+  return isNumberRegEx.test(c);
 }
 
 export default AtomicMass;
