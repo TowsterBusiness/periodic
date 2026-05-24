@@ -7,8 +7,9 @@ Features:
 * Moveable 3d molecule model (made from scratch)
 * Summarized AI helper
 * Search feature based on past searches on a search tree.
+* Other users update which molecules are useful for the current chemistry curriculum through a collective database
 
-What is this app for?...
+## How to use this app
 
 Originally, to find the atomic weights of atoms and molecules
 Ex. "(NH4)3PO4" would be (NH₄)₃PO₄
